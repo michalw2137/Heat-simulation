@@ -27,6 +27,8 @@ public class spawnParticles : MonoBehaviour
 
     private Dictionary<Vector3, Particle> allParticlesMap = new Dictionary<Vector3, Particle>();
 
+    private Dictionary<Particle, GameObject> particleObjects = new();
+
     public GameObject particleObject;
 
     [Serializable]
@@ -67,6 +69,16 @@ public class spawnParticles : MonoBehaviour
         foreach(Vector3 position in allParticlesMap.Keys) {
             // Instantiate the prefab at a position based on 'i'
             GameObject sphere = Instantiate(particleObject, position, Quaternion.identity);
+
+            // Map instantiated game objects to Particle scripts
+            Particle particle = allParticlesMap[position];
+            particleObjects[particle] = sphere;
+
+            float randomTemperature = UnityEngine.Random.Range(Particle.minTemperature, Particle.maxTemperature);
+            particle.SetTemperature(randomTemperature);
+
+            sphere.GetComponent<Renderer>().material.color = particle.color;
+
             sphere.transform.parent = this.transform;
         }
     }
