@@ -1,34 +1,67 @@
 {
-    "object": {
-        "L_min": 0.1,
-        "L_max": 3,
-        "W_min": 0.1,
-        "W_max": 3,
-        "D_min": 0.1,
-        "D_max": 3,
-        "a_min": 0.00000015,
-        "a_max": 0.000117,
-        "T0_min": 253,
-        "T0_max": 303
+    "objectLenght": {
+        "min": 0.1,
+        "max": 3,
+        "default": 1.5
     },
-    "air": {
-        "Ta_min": 253,
-        "Ta_max": 303
+    "objectWidth": {
+        "min": 0.1,
+        "max": 3,
+        "default": 1.5
     },
-    "source": {
-        "X_min": -2,
-        "X_max": 2,
-        "Y_min": -2,
-        "Y_max": 2,
-        "Z_min": -2,
-        "Z_max": 2,
-        "Ls_min": 0.0001,
-        "Ls_max": 0.5,
-        "Ws_min": 0.0001,
-        "Ws_max": 0.5,
-        "Ds_min": 0.0001,
-        "Ds_max": 0.5,
-        "Ts_min": 303,
-        "Ts_max": 2273
+    "objectDepth": {
+        "min": 0.1,
+        "max": 3,
+        "default": 1.5
+    },
+    "objectThermalDiffusivity": {
+        "min": 0.00000015,
+        "max": 0.000117,
+        "default": 0.00006
+    },
+    "objectStartingTemp": {
+        "min": 253,
+        "max": 303,
+        "default": 278
+    },
+    "airStartingTemp": {
+        "min": 253,
+        "max": 303,
+        "default": 278
+    },
+    "sourceX": {
+        "min": -2,
+        "max": 2,
+        "default": 0
+    },
+    "sourceY": {
+        "min": -2,
+        "max": 2,
+        "default": 0
+    },
+    "sourceZ": {
+        "min": -2,
+        "max": 2,
+        "default": 0
+    },
+    "sourceLenght": {
+        "min": 0.0001,
+        "max": 0.5,
+        "default": 0.25
+    },
+    "sourceWidth": {
+        "min": 0.0001,
+        "max": 0.5,
+        "default": 0.25
+    },
+    "sourceDepth": {
+        "min": 0.0001,
+        "max": 0.5,
+        "default": 0.25
+    },
+    "sourceStartingTemp": {
+        "min": 303,
+        "max": 2273,
+        "default": 1288
     }
 }
