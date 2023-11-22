@@ -31,10 +31,13 @@ public class JsonSettings
 public class SliderManager : MonoBehaviour
 {
     public GameObject sliderPrefab; // Reference to the slider prefab in the scene
-    public Text variableNameText;
+    public Text TextVariableName;
     public Slider variableSlider;
-    public Text variableValueText;
+    public Text TextVariableValue;
 
+    public float verticalOffset = 30f; // Adjust this value based on your layout needs
+
+    public float yPos;
     public string jsonFilePath = "config.json"; // Update the path to your JSON file
 
     private JsonSettings jsonSettings;
@@ -66,10 +69,14 @@ public class SliderManager : MonoBehaviour
     private void CreateSlider(string variableName, VariableSettings variableSettings)
     {
         GameObject sliderObject = Instantiate(sliderPrefab, this.transform);
+
+        sliderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, yPos);
+        yPos -= verticalOffset;
+
         Slider slider = sliderObject.GetComponent<Slider>();
 
-        Text nameText = sliderObject.transform.Find("VariableNameText").GetComponent<Text>();
-        Text valueText = sliderObject.transform.Find("VariableValueText").GetComponent<Text>();
+        Text nameText = sliderObject.transform.Find("TextVariableName").GetComponent<Text>();
+        Text valueText = sliderObject.transform.Find("TextVariableValue").GetComponent<Text>();
 
         nameText.text = variableName;
         slider.minValue = variableSettings.min;
