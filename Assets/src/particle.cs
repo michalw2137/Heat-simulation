@@ -24,6 +24,8 @@ public class Particle
         // TODO: this is quite goofy
         minTemperature = SliderManager.GetJsonSettings().objectStartingTemp.min;
         maxTemperature = SliderManager.GetJsonSettings().sourceStartingTemp.max;
+
+        SetTemperature(SliderManager.GetJsonSettings().objectStartingTemp.defaultValue);
     }
 
     public void SetTemperature(float newTemperature) {

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 54032872}
   - component: {fileID: 54032871}
   - component: {fileID: 54032870}
+  - component: {fileID: 54032873}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -191,6 +192,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &54032873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54032869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3cde3f0fa54944f873e3efd587908f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &67164569
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +799,59 @@ MonoBehaviour:
   verticalOffset: 30
   yPos: 100
   jsonFilePath: config.json
+  jsonSettings:
+    objectLenght:
+      min: 0
+      max: 0
+      defaultValue: 0
+    objectWidth:
+      min: 0
+      max: 0
+      defaultValue: 0
+    objectDepth:
+      min: 0
+      max: 0
+      defaultValue: 0
+    objectThermalDiffusivity:
+      min: 0
+      max: 0
+      defaultValue: 0
+    objectStartingTemp:
+      min: 0
+      max: 0
+      defaultValue: 0
+    airStartingTemp:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceX:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceY:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceZ:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceLenght:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceWidth:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceDepth:
+      min: 0
+      max: 0
+      defaultValue: 0
+    sourceStartingTemp:
+      min: 0
+      max: 0
+      defaultValue: 0
 --- !u!4 &1303260377
 Transform:
   m_ObjectHideFlags: 0

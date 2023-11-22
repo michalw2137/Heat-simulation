@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.IO;
 using System;
 
-public class spawnParticles : MonoBehaviour
+public class SpawnParticles : MonoBehaviour
 {
     private static float distanceBetweenParticles = 1;
     private static Vector3 increaseX = new Vector3(distanceBetweenParticles, 0, 0);
@@ -27,9 +27,11 @@ public class spawnParticles : MonoBehaviour
 
     private Dictionary<Vector3, Particle> allParticlesMap = new Dictionary<Vector3, Particle>();
 
-    private Dictionary<Particle, GameObject> particleObjects = new();
+    public Dictionary<Particle, GameObject> particleObjects = new();
 
     public GameObject particleObject;
+
+    public static SpawnParticles instance;
 
     [Serializable]
     public class SerializableVector3List
@@ -42,6 +44,9 @@ public class spawnParticles : MonoBehaviour
         }
     }
 
+    private void Awake() {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -74,11 +79,10 @@ public class spawnParticles : MonoBehaviour
             Particle particle = allParticlesMap[position];
             particleObjects[particle] = sphere;
 
-            float randomTemperature = UnityEngine.Random.Range(Particle.minTemperature, Particle.maxTemperature);
-            particle.SetTemperature(randomTemperature);
-
+            // Apply color to unity object
             sphere.GetComponent<Renderer>().material.color = particle.color;
 
+            // Add this as parent so editor isn't flooded
             sphere.transform.parent = this.transform;
         }
     }
