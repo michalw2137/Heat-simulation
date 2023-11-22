@@ -40,7 +40,17 @@ public class SliderManager : MonoBehaviour
     public float yPos;
     public string jsonFilePath = "config.json"; // Update the path to your JSON file
 
-    private JsonSettings jsonSettings;
+    public JsonSettings jsonSettings;
+
+    public static SliderManager instance; // you can reference values from json via SliderManager.instance.jsonSettings.ObjectLength.defaultValue etc
+
+    public static JsonSettings GetJsonSettings() { // or by SliderManager.GetJsonSettings().ObjectLength.defaultValue
+        return instance.jsonSettings;
+    }
+
+    private void Awake() {
+        instance = this;
+    }
 
     private void Start()
     {
