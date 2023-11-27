@@ -7,23 +7,9 @@ using System;
 
 public class SpawnParticles : MonoBehaviour
 {
-    private static float distanceBetweenParticles = 1;
-    private static Vector3 increaseX = new Vector3(distanceBetweenParticles, 0, 0);
-    private static Vector3 increaseY = new Vector3(0, distanceBetweenParticles, 0);
-    private static Vector3 increaseZ = new Vector3(0, 0, distanceBetweenParticles);
+    public float distanceBetweenParticles = 1;
 
-    private static Vector3 decreaseX = new Vector3(-distanceBetweenParticles, 0, 0);
-    private static Vector3 decreaseY = new Vector3(0, -distanceBetweenParticles, 0);
-    private static Vector3 decreaseZ = new Vector3(0, 0, -distanceBetweenParticles);
-
-    private static List<Vector3> expansionDirections = new List<Vector3> {
-        increaseX,
-        increaseY,
-        increaseZ,
-        decreaseX,
-        decreaseY,
-        decreaseZ
-    };
+    List<Vector3> expansionDirections;
 
     private Dictionary<Vector3, Particle> allParticlesMap = new Dictionary<Vector3, Particle>();
 
@@ -46,6 +32,23 @@ public class SpawnParticles : MonoBehaviour
 
     private void Awake() {
         instance = this;
+
+        Vector3 increaseX = new Vector3(distanceBetweenParticles, 0, 0);
+        Vector3 increaseY = new Vector3(0, distanceBetweenParticles, 0);
+        Vector3 increaseZ = new Vector3(0, 0, distanceBetweenParticles);
+
+        Vector3 decreaseX = new Vector3(-distanceBetweenParticles, 0, 0);
+        Vector3 decreaseY = new Vector3(0, -distanceBetweenParticles, 0);
+        Vector3 decreaseZ = new Vector3(0, 0, -distanceBetweenParticles);
+
+        expansionDirections = new List<Vector3> {
+            increaseX,
+            increaseY,
+            increaseZ,
+            decreaseX,
+            decreaseY,
+            decreaseZ
+        };
     }
 
     // Start is called before the first frame update
@@ -77,10 +80,9 @@ public class SpawnParticles : MonoBehaviour
 
             // Map instantiated game objects to Particle scripts
             Particle particle = allParticlesMap[position];
-            particleObjects[particle] = sphere;
+            particle.SetTemperature(particle.temperature);
 
-            // Apply color to unity object
-            sphere.GetComponent<Renderer>().material.color = particle.color;
+            particleObjects[particle] = sphere;
 
             // Add this as parent so editor isn't flooded
             sphere.transform.parent = this.transform;
@@ -121,6 +123,8 @@ public class SpawnParticles : MonoBehaviour
             } else {
                 Debug.Log($"Neighbor at {startingParticle.position} is out of bounds");
                 newParticles.Remove(particle);
+
+                particle.type = "air";
             }
         }
 

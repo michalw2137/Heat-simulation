@@ -14,7 +14,7 @@ public class Particle
 
     public static float minTemperature;
     public static float maxTemperature;
-
+    internal string type;
 
     public void addNeighbors(List<Particle> newNeighbors) {
         this.neighbors = newNeighbors;
@@ -29,6 +29,12 @@ public class Particle
     }
 
     public void SetTemperature(float newTemperature) {
+        if (this.type == "air") {
+            this.temperature = SliderManager.GetJsonSettings().airStartingTemp.defaultValue;
+            this.color = Color.cyan;
+            return;
+        }
+
         this.temperature = newTemperature;
         this.color = MapTemperatureToColor();
     }

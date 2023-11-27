@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58a9fb26e289e649bee778350ca4c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceBetweenParticles: 0.5
   particleObject: {fileID: 1663976330}
 --- !u!65 &1503942759
 BoxCollider:
