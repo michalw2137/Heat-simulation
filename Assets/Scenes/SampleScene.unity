@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da3cde3f0fa54944f873e3efd587908f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSimulationOn: 0
 --- !u!1 &67164569
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +609,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635140040}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -660,8 +661,8 @@ Transform:
   m_GameObject: {fileID: 635140040}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.8, z: 6.6}
-  m_LocalScale: {x: 2, y: 5, z: 10}
+  m_LocalPosition: {x: 0, y: 0.2, z: 5.9}
+  m_LocalScale: {x: 3.95, y: 6.29, z: 10.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1006,6 +1007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceBetweenParticles: 1
   particleObject: {fileID: 1663976330}
+  heatSource: {fileID: 635140040}
 --- !u!65 &1503942759
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1034,7 +1036,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1503942757}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

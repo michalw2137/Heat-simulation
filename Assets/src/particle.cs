@@ -8,6 +8,7 @@ public class Particle
 {
     List<Particle> neighbors = new List<Particle>();
     public float temperature = 0;
+    public float thermalDiffusivity;
     public Color color;
     public Vector3 position;
     public int index;
@@ -20,10 +21,16 @@ public class Particle
         this.neighbors = newNeighbors;
     }
 
+    public List<Particle> getNeighbors() {
+        return this.neighbors;
+    }
+
     public Particle() {
+        thermalDiffusivity = SliderManager.GetJsonSettings().objectThermalDiffusivity.defaultValue;
+
         // TODO: this is quite goofy
-        minTemperature = SliderManager.GetJsonSettings().objectStartingTemp.min;
-        maxTemperature = SliderManager.GetJsonSettings().sourceStartingTemp.max;
+        minTemperature = SliderManager.GetJsonSettings().objectStartingTemp.defaultValue;
+        maxTemperature = 2500; // SliderManager.GetJsonSettings().sourceStartingTemp.defaultValue;
 
         SetTemperature(SliderManager.GetJsonSettings().objectStartingTemp.defaultValue);
     }

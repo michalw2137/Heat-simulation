@@ -47,13 +47,10 @@ public class SliderManager : MonoBehaviour
     public static JsonSettings GetJsonSettings() { // or by SliderManager.GetJsonSettings().ObjectLength.defaultValue
         return instance.jsonSettings;
     }
-
-    private void Awake() {
-        instance = this;
-    }
-
     private void Start()
     {
+        instance = this;
+
         // Read JSON data from file
         string json = File.ReadAllText(jsonFilePath);
 

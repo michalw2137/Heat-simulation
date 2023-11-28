@@ -16,7 +16,7 @@ public class SpawnParticles : MonoBehaviour
     public Dictionary<Particle, GameObject> particleObjects = new();
 
     public GameObject particleObject;
-
+    public GameObject heatSource; // TODO: probably shouldnt be here
     public static SpawnParticles instance;
 
     [Serializable]
@@ -49,6 +49,36 @@ public class SpawnParticles : MonoBehaviour
             decreaseY,
             decreaseZ
         };
+    }
+
+
+    void FixedUpdate() {
+        if (!InputManager.instance.isSimulationOn) {
+            return;
+        }
+
+        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+            Particle particle = kvp.Key;
+            GameObject ball = kvp.Value;
+
+            // Dont heat air + it doesnt have neighbors
+            if (particle.type == "air") { // probably shouldnt be hardcoded string 
+                continue;
+            }
+
+            float temperatureSum = particle.temperature;
+            foreach (Particle neighbor in particle.getNeighbors()) {
+                temperatureSum += neighbor.temperature;
+            }
+
+            float averageTemperature = temperatureSum / 6.0f; // TODO: implement correct formula
+
+            particle.SetTemperature(averageTemperature); 
+            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+
+        }
+
+        Debug.Log("Updated all particles temperature");
     }
 
     // Start is called before the first frame update
@@ -86,6 +116,25 @@ public class SpawnParticles : MonoBehaviour
 
             // Add this as parent so editor isn't flooded
             sphere.transform.parent = this.transform;
+        }
+
+        Debug.ClearDeveloperConsole();
+
+        // set temperature for particles touching heat source
+        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+            Particle particle = kvp.Key;
+            GameObject ball = kvp.Value;
+
+            if (particle.type == "air") {
+                continue;
+            }
+
+            if (PointCollidesWithGameObject(particle.position, heatSource)) {
+                particle.SetTemperature(2500f); // TODO: move heat temp to HeatSource and read it from here
+                ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+
+                Debug.Log($"Set {particle.position} to heat source temperature {particle.temperature}");
+            }
         }
     }
 

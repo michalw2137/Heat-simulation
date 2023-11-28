@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public static InputManager instance;
+
+    public bool isSimulationOn = false;
+
+    void Awake() {
+        instance = this;
     }
 
     // Update is called once per frame
@@ -25,6 +27,11 @@ public class InputManager : MonoBehaviour
                 particle.SetTemperature(particle.temperature + 100);
                 gameObject.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
             }            
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            isSimulationOn = !isSimulationOn;
         }
     }
 }
