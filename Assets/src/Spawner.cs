@@ -30,8 +30,8 @@ public class SpawnParticles : MonoBehaviour
         }
     }
 
-    List<Particle> airParticles = new();
-    List<Particle> edgeParticles = new();
+    public List<Particle> airParticles = new();
+    public List<Particle> edgeParticles = new();
 
     private void Awake() {
         instance = this;
@@ -105,6 +105,7 @@ public class SpawnParticles : MonoBehaviour
 
         Debug.LogWarning("FINISHED SPAWNING PARTICLES");
         Debug.LogWarning($"Particles count: {allParticlesMap.Count}");
+        Debug.LogWarning($"Edges count: {edgeParticles.Count}");
 
         // Specify the file path where you want to save the JSON
         string filePath = "particleList.json";
@@ -116,6 +117,19 @@ public class SpawnParticles : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         Debug.Log(json);
+
+        // Specify the file path where you want to save the JSON
+        string edgeFilePath = "edgeParticles.json";
+
+        // Serialize and save the list to a file using JsonUtility
+        List<Vector3> edgePositionList = new();
+        foreach (Particle edge in edgeParticles) {
+            edgePositionList.Add(edge.position);
+        }
+
+        string edgJjson = JsonUtility.ToJson(new SerializableVector3List(edgePositionList), true);
+        File.WriteAllText(edgeFilePath, edgJjson);
+
 
         foreach(Vector3 position in allParticlesMap.Keys) {
             // Instantiate the prefab at a position based on 'i'
@@ -204,8 +218,10 @@ public class SpawnParticles : MonoBehaviour
         Debug.Log($"Added neighbors count: {neighbors.Count}");
 
         if (neighbors.Count < expansionDirections.Count) {
+            Debug.Log($"Particle {startingParticle.position} has only {neighbors.Count} neighbors, marking it as edge");
             startingParticle.type = "edge";
             edgeParticles.Add(startingParticle);
+            startingParticle.index = edgeParticles.Count;
         }
 
         foreach(Particle neighbor in newParticles) {

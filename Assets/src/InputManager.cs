@@ -33,5 +33,10 @@ public class InputManager : MonoBehaviour
         {
             isSimulationOn = !isSimulationOn;
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            DynamicMesh.instance.GenerateMesh();
+        }
     }
 }

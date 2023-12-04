@@ -17,6 +17,10 @@ public class Particle
     public static float maxTemperature;
     internal string type;
 
+    public int getNeighborsCount() {
+        return this.neighbors.Count;
+    }
+    
     public void addNeighbors(List<Particle> newNeighbors) {
         this.neighbors = newNeighbors;
     }
