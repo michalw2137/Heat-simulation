@@ -1,19 +1,28 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+{
     public float moveSpeed = 5f;
     public float turnSpeed = 2f;
-    public float verticalMoveSpeed = 3f;
+    public float verticalLookSpeed = 2f;
+    public float minLookAngle = -80f; // Adjust as needed
+    public float maxLookAngle = 80f;  // Adjust as needed
 
-    void Update() {
+    private float rotationX = 0f;
+
+    void Update()
+    {
         // Translation
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float upDown = 0f;
 
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKey(KeyCode.Space))
+        {
             upDown = 1f;
-        } else if (Input.GetKey(KeyCode.LeftShift)) {
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
             upDown = -1f;
         }
 
@@ -22,10 +31,12 @@ public class CameraController : MonoBehaviour {
         transform.Translate(moveAmount);
 
         // Rotation
-        float mouseX = Input.GetAxis("Mouse X");
-        transform.Rotate(Vector3.up * mouseX * turnSpeed);
+        float mouseX = Input.GetAxis("Mouse X") * turnSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * verticalLookSpeed;
 
-        // Ensure the camera doesn't roll
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0f);
+        rotationX -= mouseY;
+        rotationX = Mathf.Clamp(rotationX, minLookAngle, maxLookAngle);
+
+        transform.rotation = Quaternion.Euler(rotationX, transform.rotation.eulerAngles.y + mouseX, 0f);
     }
 }
