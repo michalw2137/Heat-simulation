@@ -23,7 +23,8 @@ public class Particle
         if (edgeNeighbors.Count > 0) {
             return edgeNeighbors;
         }
-
+        
+        edgeNeighbors.Clear();
         foreach (Particle neighbor in this.neighbors) {
             if (neighbor.type == "edge") {
                 edgeNeighbors.Add(neighbor);
