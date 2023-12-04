@@ -91,6 +91,7 @@ class DynamicMesh : MonoBehaviour{
         foreach (Particle particle in particles) {
 
             if (particle.getEdgesNeighborsCount() == 3) {
+                // 0
                 triangles.Add(particle.index);
                 triangles.Add(particle.getEdgesNeighbors()[0].index);
                 triangles.Add(particle.getEdgesNeighbors()[1].index);
@@ -99,65 +100,152 @@ class DynamicMesh : MonoBehaviour{
                 triangles.Add(particle.getEdgesNeighbors()[0].index);
                 triangles.Add(particle.getEdgesNeighbors()[2].index);
 
+                // 1
                 triangles.Add(particle.index);
                 triangles.Add(particle.getEdgesNeighbors()[1].index);
                 triangles.Add(particle.getEdgesNeighbors()[2].index);
             }
 
             if (particle.getEdgesNeighborsCount() == 4) {
-                Vector3 oneAxisPosition = particle.getEdgesNeighbors()[0].position;
-                int aAxisIndex1 = 0;
-                int aAxisIndex2 = 4;
+                // 0 
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
 
-                for (int i = 1; i < 4; i++) {
-                    if (particle.getEdgesNeighbors()[i].position.x == oneAxisPosition.x ||
-                     particle.getEdgesNeighbors()[i].position.y == oneAxisPosition.y) {
-                        aAxisIndex2 = i;
-                        break;
-                    }
-                }
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
 
-                if (aAxisIndex2 == 4) {
-                    Debug.LogError("aAxisIndex2 has index 4");
-                }
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
                 
-                int bAxisIndex1 = 4;
-                int bAxisIndex2 = 4;
-                for (int i = 1; i < 4; i++) {
-                    if (i != aAxisIndex2) {
-                        bAxisIndex1 = i;
-                    }
-                }
-
-                if (bAxisIndex1 == 4) {
-                    Debug.LogError("bAxisIndex1 has index 4");
-                }
-
-                for (int i = bAxisIndex1; i < 4; i++) {
-                    if (i != aAxisIndex2) {
-                        bAxisIndex2 = i;
-                    }
-                }
-
-                if (bAxisIndex2 == 4) {
-                    Debug.LogError("bAxisIndex2 has index 4");
-                }
+                // 1
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex1].index);
-                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+
+                // 2
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+            }
+
+            if (particle.getEdgesNeighborsCount() == 5) {
+                // 0 
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex1].index);
-                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex2].index);
-                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+                
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+                
+                // 1
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex2].index);
-                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+
+                // 2
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+
+                // 3
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+            }
+
+            if (particle.getEdgesNeighborsCount() == 6) {
+                // 0 
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+                
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+                
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[5].index);
+
+                // 1
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[5].index);
+                
+                // 2
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[5].index);
+                
+                // 3
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[3].index);
+                triangles.Add(particle.getEdgesNeighbors()[5].index);
+                
+                // 4
+                triangles.Add(particle.index);
+                triangles.Add(particle.getEdgesNeighbors()[4].index);
+                triangles.Add(particle.getEdgesNeighbors()[5].index);
             }
         }
 
