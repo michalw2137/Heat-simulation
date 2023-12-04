@@ -6,6 +6,8 @@ using UnityEngine;
  
 public class Particle
 {
+    List<Particle> edgeNeighbors = new();
+
     List<Particle> neighbors = new List<Particle>();
     public float temperature = 0;
     public float thermalDiffusivity;
@@ -17,8 +19,21 @@ public class Particle
     public static float maxTemperature;
     internal string type;
 
-    public int getNeighborsCount() {
-        return this.neighbors.Count;
+    public List<Particle> getEdgesNeighbors() {
+        if (edgeNeighbors.Count > 0) {
+            return edgeNeighbors;
+        }
+
+        foreach (Particle neighbor in this.neighbors) {
+            if (neighbor.type == "edge") {
+                edgeNeighbors.Add(neighbor);
+            }
+        }
+        return edgeNeighbors;
+    }
+
+    public int getEdgesNeighborsCount() {
+        return getEdgesNeighbors().Count;
     }
     
     public void addNeighbors(List<Particle> newNeighbors) {

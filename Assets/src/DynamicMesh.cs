@@ -12,6 +12,22 @@ class DynamicMesh : MonoBehaviour{
         instance = this;
     }
 
+    public void updateColors() {
+        if (!mesh) {
+            return;
+        }
+
+        List<Particle> particles = SpawnParticles.instance.edgeParticles;
+        Color[] colors = new Color[particles.Count];
+
+        for (int i = 0; i < particles.Count; i++)
+        {
+            colors[i] = particles[i].color; // Assuming Particle has a 'color' field
+        }
+
+        mesh.colors = colors; // Set the colors array
+    }
+
     public void GenerateMesh()
     {
         // Create a new mesh
@@ -21,14 +37,31 @@ class DynamicMesh : MonoBehaviour{
 
         // Set the vertex positions
         Vector3[] vertices = new Vector3[particles.Count];
+        Color[] colors = new Color[particles.Count];
+
         for (int i = 0; i < particles.Count; i++)
         {
             vertices[i] = new Vector3(particles[i].position.x, particles[i].position.y, particles[i].position.z);
+            colors[i] = particles[i].color; // Assuming Particle has a 'color' field
         }
+        Debug.Log("vertices: " + vertices.Length);
+
         mesh.vertices = vertices;
+        mesh.colors = colors; // Set the colors array
 
         // Automatically generate triangles based on the order of vertices
-        mesh.triangles = GenerateTriangles(particles);
+        var tr = GenerateTriangles(particles);
+
+        int j = 0;
+        while (j < tr.Length) {
+            if (tr[j++] == vertices.Length) {
+                Debug.LogError("TOO HIGH INDEX at j=" + j);
+            }
+            // Debug.Log($"triangle: {tr[j++]}, {tr[j++]}, {tr[j++]}");
+        }
+
+        Debug.Log("triangles indices: " + tr.Length);
+        mesh.triangles = tr; 
 
         // Create a new GameObject to hold the mesh
         GameObject newObj = new GameObject("CustomMesh");
@@ -40,13 +73,15 @@ class DynamicMesh : MonoBehaviour{
         // Assign the created mesh to the MeshFilter
         meshFilter.mesh = mesh;
 
-        // Create a new material (you can adjust this based on your preferences)
-        Material material = new Material(Shader.Find("Standard"));
+        // Create a new material with your custom shader
+        Material material = new Material(Shader.Find("Custom/VertexColorShader")); // Use the name of your custom shader
+        // Set other material properties as needed
         material.color = Color.blue; // Set the color as needed
 
         // Assign the material to the MeshRenderer
         meshRenderer.material = material;
     }
+
 
     int[] GenerateTriangles(List<Particle> particles)
     {
@@ -54,28 +89,29 @@ class DynamicMesh : MonoBehaviour{
         List<int> triangles = new();
         
         foreach (Particle particle in particles) {
-            if (particle.getNeighborsCount() == 3) {
+
+            if (particle.getEdgesNeighborsCount() == 3) {
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[0].index);
-                triangles.Add(particle.getNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[0].index);
-                triangles.Add(particle.getNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[0].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[1].index);
-                triangles.Add(particle.getNeighbors()[2].index);
+                triangles.Add(particle.getEdgesNeighbors()[1].index);
+                triangles.Add(particle.getEdgesNeighbors()[2].index);
             }
 
-            if (particle.getNeighborsCount() == 4) {
-                Vector3 oneAxisPosition = particle.getNeighbors()[0].position;
+            if (particle.getEdgesNeighborsCount() == 4) {
+                Vector3 oneAxisPosition = particle.getEdgesNeighbors()[0].position;
                 int aAxisIndex1 = 0;
                 int aAxisIndex2 = 4;
 
                 for (int i = 1; i < 4; i++) {
-                    if (particle.getNeighbors()[i].position.x == oneAxisPosition.x ||
-                     particle.getNeighbors()[i].position.y == oneAxisPosition.y) {
+                    if (particle.getEdgesNeighbors()[i].position.x == oneAxisPosition.x ||
+                     particle.getEdgesNeighbors()[i].position.y == oneAxisPosition.y) {
                         aAxisIndex2 = i;
                         break;
                     }
@@ -108,20 +144,20 @@ class DynamicMesh : MonoBehaviour{
                 }
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[aAxisIndex1].index);
-                triangles.Add(particle.getNeighbors()[bAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex1].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[aAxisIndex1].index);
-                triangles.Add(particle.getNeighbors()[bAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex2].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[aAxisIndex2].index);
-                triangles.Add(particle.getNeighbors()[bAxisIndex1].index);
+                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex1].index);
 
                 triangles.Add(particle.index);
-                triangles.Add(particle.getNeighbors()[aAxisIndex2].index);
-                triangles.Add(particle.getNeighbors()[bAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[aAxisIndex2].index);
+                triangles.Add(particle.getEdgesNeighbors()[bAxisIndex2].index);
             }
         }
 

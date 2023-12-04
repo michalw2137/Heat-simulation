@@ -71,11 +71,11 @@ public class SpawnParticles : MonoBehaviour
                 continue;
             }
 
-            if (particle.type == "edge") { // probably shouldnt be hardcoded string 
-                ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
+            // if (particle.type == "edge") { // probably shouldnt be hardcoded string 
+            //     ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
 
-                continue;
-            }
+            //     continue;
+            // }
 
             float temperatureSum = particle.temperature;
             foreach (Particle neighbor in particle.getNeighbors()) {
@@ -90,6 +90,8 @@ public class SpawnParticles : MonoBehaviour
         }
 
         Debug.Log("Updated all particles temperature");
+
+        DynamicMesh.instance.updateColors();
     }
 
     // Start is called before the first frame update
@@ -158,11 +160,11 @@ public class SpawnParticles : MonoBehaviour
                 continue;
             }
 
-            if (particle.type == "edge") {
-                ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
+            // if (particle.type == "edge") {
+            //     ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
 
-                continue;
-            }
+            //     continue;
+            // }
 
             if (PointCollidesWithGameObject(particle.position, heatSource)) {
                 particle.SetTemperature(2500f); // TODO: move heat temp to HeatSource and read it from here
@@ -221,7 +223,7 @@ public class SpawnParticles : MonoBehaviour
             Debug.Log($"Particle {startingParticle.position} has only {neighbors.Count} neighbors, marking it as edge");
             startingParticle.type = "edge";
             edgeParticles.Add(startingParticle);
-            startingParticle.index = edgeParticles.Count;
+            startingParticle.index = edgeParticles.Count - 1;
         }
 
         foreach(Particle neighbor in newParticles) {

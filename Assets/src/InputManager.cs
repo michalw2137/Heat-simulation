@@ -26,7 +26,9 @@ public class InputManager : MonoBehaviour
                 // Now you can use 'particle' and 'gameObject' as needed
                 particle.SetTemperature(particle.temperature + 100);
                 gameObject.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
-            }            
+            }      
+
+            DynamicMesh.instance.updateColors();      
         }
 
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
