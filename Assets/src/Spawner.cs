@@ -134,17 +134,19 @@ public class SpawnParticles : MonoBehaviour
 
 
         foreach(Vector3 position in allParticlesMap.Keys) {
-            // Instantiate the prefab at a position based on 'i'
-            GameObject sphere = Instantiate(particleObject, position, Quaternion.identity);
-
             // Map instantiated game objects to Particle scripts
             Particle particle = allParticlesMap[position];
             particle.SetTemperature(particle.temperature);
 
-            particleObjects[particle] = sphere;
+            if (particle.type != "air") {
+                // Instantiate the prefab at a position based on 'i'
+                GameObject sphere = Instantiate(particleObject, position, Quaternion.identity);
 
-            // Add this as parent so editor isn't flooded
-            sphere.transform.parent = this.transform;
+                particleObjects[particle] = sphere;
+
+                // Add this as parent so editor isn't flooded
+                sphere.transform.parent = this.transform;
+            }
         }
 
         Debug.ClearDeveloperConsole();
@@ -155,6 +157,7 @@ public class SpawnParticles : MonoBehaviour
             GameObject ball = kvp.Value;
 
             if (particle.type == "air") {
+                particle.SetTemperature(278f);
                 ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
 
                 continue;
@@ -232,18 +235,29 @@ public class SpawnParticles : MonoBehaviour
         }
     }  
 
-    // Function to check if a point collides with a GameObject's collider
+    // Function to check if a point collides with any of the GameObject's colliders
     bool PointCollidesWithGameObject(Vector3 point, GameObject gameObject)
     {
-        // Ensure the GameObject has a collider
-        if (gameObject.TryGetComponent<Collider>(out var collider))
+        // Get all colliders attached to the GameObject
+        Collider[] colliders = gameObject.GetComponents<Collider>();
+
+        if (colliders.Length > 0)
         {
-            // Check if the point is within the bounds of the collider
-            return collider.bounds.Contains(point);
+            // Check if the point is within the bounds of any of the colliders
+            foreach (Collider collider in colliders)
+            {
+                if (collider.bounds.Contains(point))
+                {
+                    return true; // Point is inside one of the colliders
+                }
+            }
+
+            return false; // Point is outside all colliders
         }
         else
         {
-            Debug.LogWarning("The GameObject doesn't have a Collider component.");
+            // If the GameObject doesn't have any Collider components, log a warning
+            Debug.LogWarning("The GameObject doesn't have any Collider components.");
             return false;
         }
     }
