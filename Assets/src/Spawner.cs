@@ -30,6 +30,9 @@ public class SpawnParticles : MonoBehaviour
         }
     }
 
+    List<Particle> airParticles = new();
+    List<Particle> edgeParticles = new();
+
     private void Awake() {
         instance = this;
 
@@ -63,6 +66,14 @@ public class SpawnParticles : MonoBehaviour
 
             // Dont heat air + it doesnt have neighbors
             if (particle.type == "air") { // probably shouldnt be hardcoded string 
+                            ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
+
+                continue;
+            }
+
+            if (particle.type == "edge") { // probably shouldnt be hardcoded string 
+                ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
+
                 continue;
             }
 
@@ -89,7 +100,9 @@ public class SpawnParticles : MonoBehaviour
         };
 
         SpawnParticleWithNeighbors(startingParticle, 0);
-        
+
+        Debug.Log(airParticles.Count);
+
         Debug.LogWarning("FINISHED SPAWNING PARTICLES");
         Debug.LogWarning($"Particles count: {allParticlesMap.Count}");
 
@@ -126,6 +139,14 @@ public class SpawnParticles : MonoBehaviour
             GameObject ball = kvp.Value;
 
             if (particle.type == "air") {
+                ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
+
+                continue;
+            }
+
+            if (particle.type == "edge") {
+                ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
+
                 continue;
             }
 
@@ -133,7 +154,7 @@ public class SpawnParticles : MonoBehaviour
                 particle.SetTemperature(2500f); // TODO: move heat temp to HeatSource and read it from here
                 ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
 
-                Debug.Log($"Set {particle.position} to heat source temperature {particle.temperature}");
+                // Debug.Log($"Set {particle.position} to heat source temperature {particle.temperature}");
             }
         }
     }
@@ -166,7 +187,7 @@ public class SpawnParticles : MonoBehaviour
                 newParticles.Add(particle);
             }
 
-            if(PointCollidesWithGameObject(neighborPosition, gameObject)) {
+            if (PointCollidesWithGameObject(neighborPosition, gameObject)) {
                 neighbors.Add(particle);
                 Debug.Log($"Neighbor at {startingParticle.position} collides with shape, adding it to neighbors list");
             } else {
@@ -174,11 +195,18 @@ public class SpawnParticles : MonoBehaviour
                 newParticles.Remove(particle);
 
                 particle.type = "air";
+
+                airParticles.Add(particle);
             }
         }
 
         startingParticle.addNeighbors(neighbors);
         Debug.Log($"Added neighbors count: {neighbors.Count}");
+
+        if (neighbors.Count < expansionDirections.Count) {
+            startingParticle.type = "edge";
+            edgeParticles.Add(startingParticle);
+        }
 
         foreach(Particle neighbor in newParticles) {
             index += 1000;

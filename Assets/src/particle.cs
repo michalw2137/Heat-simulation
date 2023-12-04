@@ -25,6 +25,13 @@ public class Particle
         return this.neighbors;
     }
 
+    public void MarkNeighborsAs(string type) {
+        foreach (Particle neighbor in neighbors) {
+            Debug.Log($"Marked {neighbor.position} as {type}");
+            neighbor.type = type;
+        }
+    }
+
     public Particle() {
         thermalDiffusivity = SliderManager.GetJsonSettings().objectThermalDiffusivity.defaultValue;
 
