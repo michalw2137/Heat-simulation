@@ -1,5 +1,7 @@
 
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 class DynamicMesh : MonoBehaviour{
@@ -14,6 +16,18 @@ class DynamicMesh : MonoBehaviour{
         mesh = GetComponent<MeshFilter>().mesh;
     }
 
+    Color getColorAtPosition(Vector3 position) {
+        var scaledX = position.x * transform.localScale.x;
+        var scaledY = position.y * transform.localScale.y;
+        var scaledZ = position.z * transform.localScale.z;
+        var scaledPosition = new Vector3(scaledX, scaledY, scaledZ);
+
+        var particle = SpawnParticles.instance.allParticlesMap[scaledPosition];
+
+        return particle.color;
+    }
+
+
     public void updateColors() {
         var vertices = mesh.vertices;
 
@@ -24,8 +38,7 @@ class DynamicMesh : MonoBehaviour{
         int i = 0;
         foreach (var vertex in vertices)
         {
-            var particle = SpawnParticles.instance.allParticlesMap[vertex];
-            colors[i++] = particle.color; // Assuming Particle has a 'color' field
+            colors[i++] = getColorAtPosition(vertex); // Assuming Particle has a 'color' field
         }
 
         mesh.colors = colors; // Set the colors array

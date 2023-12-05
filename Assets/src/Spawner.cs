@@ -89,7 +89,7 @@ public class SpawnParticles : MonoBehaviour
 
         }
 
-        Debug.Log("Updated all particles temperature");
+        // Debug.Log("Updated all particles temperature");
 
         DynamicMesh.instance.updateColors();
     }
