@@ -10,6 +10,8 @@ public class Particle
 
     List<Particle> neighbors = new List<Particle>();
     public float temperature = 0;
+    public float newTemperature = 0;
+
     public float thermalDiffusivity;
     public Color color;
     public Vector3 position;
