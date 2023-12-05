@@ -11,7 +11,7 @@ public class SpawnParticles : MonoBehaviour
 
     List<Vector3> expansionDirections;
 
-    private Dictionary<Vector3, Particle> allParticlesMap = new Dictionary<Vector3, Particle>();
+    public Dictionary<Vector3, Particle> allParticlesMap = new Dictionary<Vector3, Particle>();
 
     public Dictionary<Particle, GameObject> particleObjects = new();
 

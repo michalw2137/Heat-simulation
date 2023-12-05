@@ -10,19 +10,22 @@ class DynamicMesh : MonoBehaviour{
 
     void Awake() {
         instance = this;
+
+        mesh = GetComponent<MeshFilter>().mesh;
     }
 
     public void updateColors() {
-        if (!mesh) {
-            return;
-        }
+        var vertices = mesh.vertices;
 
-        List<Particle> particles = SpawnParticles.instance.edgeParticles;
-        Color[] colors = new Color[particles.Count];
+        int verticesCount = vertices.Length;
 
-        for (int i = 0; i < particles.Count; i++)
+        Color[] colors = new Color[verticesCount];
+
+        int i = 0;
+        foreach (var vertex in vertices)
         {
-            colors[i] = particles[i].color; // Assuming Particle has a 'color' field
+            var particle = SpawnParticles.instance.allParticlesMap[vertex];
+            colors[i++] = particle.color; // Assuming Particle has a 'color' field
         }
 
         mesh.colors = colors; // Set the colors array
@@ -30,6 +33,8 @@ class DynamicMesh : MonoBehaviour{
 
     public void GenerateMesh()
     {
+        return;
+
         // Create a new mesh
         mesh = new Mesh();
 
