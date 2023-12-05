@@ -47,7 +47,8 @@ public class SliderManager : MonoBehaviour
     public static JsonSettings GetJsonSettings() { // or by SliderManager.GetJsonSettings().ObjectLength.defaultValue
         return instance.jsonSettings;
     }
-    private void Start()
+
+    private void Awake()
     {
         instance = this;
 
@@ -57,20 +58,20 @@ public class SliderManager : MonoBehaviour
         // Deserialize JSON into the JsonSettings object
         jsonSettings = JsonUtility.FromJson<JsonSettings>(json);
 
-        // Initialize sliders for each variable
-        CreateSlider("objectLenght", jsonSettings.objectLenght);
-        CreateSlider("objectWidth", jsonSettings.objectWidth);
-        CreateSlider("objectDepth", jsonSettings.objectDepth);
-        CreateSlider("objectThermalDiffusivity", jsonSettings.objectThermalDiffusivity);
-        CreateSlider("objectStartingTemp", jsonSettings.objectStartingTemp);
-        CreateSlider("airStartingTemp", jsonSettings.airStartingTemp);
-        CreateSlider("sourceX", jsonSettings.sourceX);
-        CreateSlider("sourceY", jsonSettings.sourceY);
-        CreateSlider("sourceZ", jsonSettings.sourceZ);
-        CreateSlider("sourceLenght", jsonSettings.sourceLenght);
-        CreateSlider("sourceWidth", jsonSettings.sourceWidth);
-        CreateSlider("sourceDepth", jsonSettings.sourceDepth);
-        CreateSlider("sourceStartingTemp", jsonSettings.sourceStartingTemp);
+        // // Initialize sliders for each variable
+        // CreateSlider("objectLenght", jsonSettings.objectLenght);
+        // CreateSlider("objectWidth", jsonSettings.objectWidth);
+        // CreateSlider("objectDepth", jsonSettings.objectDepth);
+        // CreateSlider("objectThermalDiffusivity", jsonSettings.objectThermalDiffusivity);
+        // CreateSlider("objectStartingTemp", jsonSettings.objectStartingTemp);
+        // CreateSlider("airStartingTemp", jsonSettings.airStartingTemp);
+        // CreateSlider("sourceX", jsonSettings.sourceX);
+        // CreateSlider("sourceY", jsonSettings.sourceY);
+        // CreateSlider("sourceZ", jsonSettings.sourceZ);
+        // CreateSlider("sourceLenght", jsonSettings.sourceLenght);
+        // CreateSlider("sourceWidth", jsonSettings.sourceWidth);
+        // CreateSlider("sourceDepth", jsonSettings.sourceDepth);
+        // CreateSlider("sourceStartingTemp", jsonSettings.sourceStartingTemp);
     }
 
     private void CreateSlider(string variableName, VariableSettings variableSettings)
