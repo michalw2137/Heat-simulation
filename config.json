@@ -1,7 +1,7 @@
 {
     "objectThermalDiffusivity": {
         "min": 0.00000015,
-        "max": 0.000117,
+        "max": 0.001,
         "default": 0.00006
     },
     "objectStartingTemp": {
