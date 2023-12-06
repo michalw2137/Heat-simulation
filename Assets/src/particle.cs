@@ -72,19 +72,26 @@ public class Particle
     
         float neighborsSum = 0;
 
+        string neighborsTemps = "";
+
         for (int i = 0; i < 6; i ++) {
             if (i < neighbors.Count) {
                 neighborsSum += neighbors[i].temperature;
+
+                neighborsTemps += neighbors[i].temperature + ", ";
             } else {
                 neighborsSum += SliderAirTemp.instance.currentValue;
+
+                neighborsTemps += SliderAirTemp.instance.currentValue + ", ";
             }
         }
 
-        float rightPart = F * neighborsSum;
+        float rightPart = F * neighborsSum / 6.0f;
 
         this.newTemperature = leftPart + rightPart;
 
-        // Debug.Log($"Old temp: {temperature}, New temp: {newTemperature}");
+        // if (temperature != newTemperature && temperature < SliderSourceTemp.instance.currentValue) 
+        //     Debug.Log($"Old: {temperature}, New: {newTemperature}, F: {F}, n: {neighborsTemps}, right: {rightPart}, left: {leftPart}");
     }
 
     public Particle() {
@@ -108,14 +115,65 @@ public class Particle
         this.color = MapTemperatureToColor();
     }
 
-    Color MapTemperatureToColor()
-    {
-        
-        // Normalize temperature to a value between 0 and 1
-        float normalizedTemperature = Mathf.InverseLerp(SliderStartingTemp.instance.minSliderValue, SliderSourceTemp.instance.currentValue, temperature);
+    Color MapTemperatureToColor() {
+        // Map temperature values to a color gradient
+        float normalizedTemperature = Mathf.Clamp01((temperature - 253.0f) / (2273.0f - 253.0f));
 
-        // Use the gradient function to map the normalized value to a color
-        Color color = GradientColor(normalizedTemperature);
+        // Define the custom color scale
+        Color color0 = new Color(0.5f, 0, 1); 
+        Color color1 = new Color(0, 0, 1); 
+        Color color2 = new Color(0, 0.5f, 1);
+        Color color3 = new Color(0, 1, 1);
+        Color color4 = new Color(0, 1, 0.5f);
+        Color color5 = new Color(0, 1, 0);
+        Color color6 = new Color(0.5f, 1, 0);
+        Color color7 = new Color(1, 1, 0);
+        Color color8 = new Color(1, 0.5f, 0);
+        Color color9 = new Color(1, 0, 0);
+        Color color10 = new Color(0.5f, 0, 0);
+
+        Color color;
+
+        if (normalizedTemperature < 0.1f) {
+            float t = 10 * normalizedTemperature;
+            color = Color.Lerp(color0, color1, t);
+        } 
+        else if (normalizedTemperature < 0.2f) {
+            float t = 10 * (normalizedTemperature - 0.1f);
+            color = Color.Lerp(color1, color2, t);
+        } 
+        else if (normalizedTemperature < 0.3f) {
+            float t = 10 * (normalizedTemperature - 0.2f);
+            color = Color.Lerp(color2, color3, t);
+        } 
+        else if (normalizedTemperature < 0.4f) {
+            float t = 10 * (normalizedTemperature - 0.3f);
+            color = Color.Lerp(color3, color4, t);
+        } 
+        else if (normalizedTemperature < 0.5f) {
+            float t = 10 * (normalizedTemperature - 0.4f);
+            color = Color.Lerp(color4, color5, t);
+        } 
+        else if (normalizedTemperature < 0.6f) {
+            float t = 10 * (normalizedTemperature - 0.5f);
+            color = Color.Lerp(color5, color6, t);
+        } 
+        else if (normalizedTemperature < 0.7f) {
+            float t = 10 * (normalizedTemperature - 0.6f);
+            color = Color.Lerp(color6, color7, t);
+        } 
+        else if (normalizedTemperature < 0.8f) {
+            float t = 10 * (normalizedTemperature - 0.7f);
+            color = Color.Lerp(color7, color8, t);
+        } 
+        else if (normalizedTemperature < 0.9f) {
+            float t = 10 * (normalizedTemperature - 0.8f);
+            color = Color.Lerp(color8, color9, t);
+        } 
+        else {
+            float t = 10 * (normalizedTemperature - 0.9f);
+            color = Color.Lerp(color9, color10, t);
+        } 
 
         return color;
     }

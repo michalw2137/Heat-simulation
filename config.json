@@ -17,7 +17,7 @@
     "sourceX": {
         "min": -10,
         "max": 10,
-        "default": 3
+        "default": -3
     },
     "sourceY": {
         "min": -10,
@@ -27,7 +27,7 @@
     "sourceZ": {
         "min": -10,
         "max": 10,
-        "default": -5
+        "default": -6
     },
     "sourceScale": {
         "min": 0.1,
