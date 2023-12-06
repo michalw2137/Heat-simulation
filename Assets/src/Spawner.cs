@@ -96,18 +96,18 @@ public class SpawnParticles : MonoBehaviour
 
             particle.calculateNewTemperature();
             
-            particle.SetTemperature(particle.newTemperature);
+            // particle.SetTemperature(particle.newTemperature);
             // ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
 
         }
 
-        // foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
-        //     Particle particle = kvp.Key;
-        //     GameObject ball = kvp.Value;
+        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+            Particle particle = kvp.Key;
+            // GameObject ball = kvp.Value;
             
-        //     particle.SetTemperature(particle.newTemperature);
-        //     ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
-        // }
+            particle.SetTemperature(particle.newTemperature);
+            // ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+        }
 
         // Debug.Log("Updated all particles temperature");
 
