@@ -21,11 +21,11 @@ public class InputManager : MonoBehaviour
             foreach (var kvp in SpawnParticles.instance.particleObjects)
             {
                 Particle particle = kvp.Key;
-                GameObject gameObject = kvp.Value;
+                // GameObject gameObject = kvp.Value;
 
                 // Now you can use 'particle' and 'gameObject' as needed
                 particle.SetTemperature(particle.temperature + 100);
-                gameObject.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+                // gameObject.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
             }      
 
             DynamicMesh.instance.updateColors();      

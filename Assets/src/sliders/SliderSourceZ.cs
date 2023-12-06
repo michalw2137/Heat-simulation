@@ -13,6 +13,8 @@ public class SliderSourceZ : SliderTemplate
 
         variableName = "Source Z";
 
+        HeatSource.instance.setZ(defaultSliderValue);
+
         base.Init();
         slider.onValueChanged.AddListener(updateHeatSource);
     }

@@ -64,7 +64,7 @@ public class SpawnParticles : MonoBehaviour
     public void setStartingTemp() {
         foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
             Particle particle = kvp.Key;
-            GameObject ball = kvp.Value;
+            // GameObject ball = kvp.Value;
 
             if (particle.type == "air") {
                 particle.SetTemperature(SliderAirTemp.instance.currentValue);
@@ -75,7 +75,7 @@ public class SpawnParticles : MonoBehaviour
                 particle.SetTemperature(SliderStartingTemp.instance.currentValue);
             }
 
-            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+            // ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
         }
     }
 
@@ -87,7 +87,7 @@ public class SpawnParticles : MonoBehaviour
 
         foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
             Particle particle = kvp.Key;
-            GameObject ball = kvp.Value;
+            // GameObject ball = kvp.Value;
 
             if (PointCollidesWithGameObject(particle.position, heatSource)) {
                 particle.SetTemperature(SliderSourceTemp.instance.currentValue);
@@ -97,7 +97,7 @@ public class SpawnParticles : MonoBehaviour
             particle.calculateNewTemperature();
             
             particle.SetTemperature(particle.newTemperature);
-            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+            // ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
 
         }
 
@@ -160,12 +160,12 @@ public class SpawnParticles : MonoBehaviour
 
             if (particle.type != "air") {
                 // Instantiate the prefab at a position based on 'i'
-                GameObject sphere = Instantiate(particleObject, position, Quaternion.identity);
+                // GameObject sphere = Instantiate(particleObject, position, Quaternion.identity);
 
-                particleObjects[particle] = sphere;
+                particleObjects[particle] = null;
 
                 // Add this as parent so editor isn't flooded
-                sphere.transform.parent = this.transform;
+                // sphere.transform.parent = this.transform;
             }
         }
 
@@ -174,11 +174,11 @@ public class SpawnParticles : MonoBehaviour
         // set temperature for particles touching heat source
         foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
             Particle particle = kvp.Key;
-            GameObject ball = kvp.Value;
+            // GameObject ball = kvp.Value;
 
             if (particle.type == "air") {
                 particle.SetTemperature(278f);
-                ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
+                // ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
 
                 continue;
             }
@@ -191,7 +191,7 @@ public class SpawnParticles : MonoBehaviour
 
             if (PointCollidesWithGameObject(particle.position, heatSource)) {
                 particle.SetTemperature(2500f); // TODO: move heat temp to HeatSource and read it from here
-                ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+                // ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
 
                 // Debug.Log($"Set {particle.position} to heat source temperature {particle.temperature}");
             }
