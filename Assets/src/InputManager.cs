@@ -31,14 +31,20 @@ public class InputManager : MonoBehaviour
             DynamicMesh.instance.updateColors();      
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
+        if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
             isSimulationOn = !isSimulationOn;
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
+        if (Input.GetKeyDown(KeyCode.M)) {
             DynamicMesh.instance.GenerateMesh();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha8)) {
+            HeatSource.instance.Hide();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha9)) {
+            HeatSource.instance.Show();
         }
     }
 }

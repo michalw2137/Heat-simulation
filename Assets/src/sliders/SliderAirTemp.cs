@@ -5,6 +5,8 @@ public class SliderAirTemp : SliderTemplate
         maxSliderValue = SliderManager.GetJsonSettings().airStartingTemp.max;
         defaultSliderValue = SliderManager.GetJsonSettings().airStartingTemp.defaultValue;
 
+        variableName = "Air temperature";
+
         base.Init();
     }
     

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -54,8 +55,32 @@ public class Particle
         }
     }
 
+    public void calculateNewTemperature() {
+        float F = thermalDiffusivity * Time.deltaTime / Mathf.Pow(SpawnParticles.instance.distanceBetweenParticles / 100f, 2);
+
+        if (F > 1f/6f) {
+            Debug.LogWarning($"F > 1/6 ({F})");
+        }
+
+        float leftPart = this.temperature * (1 - 6) * F;
+    
+        float neighborsSum = 0;
+
+        for (int i = 0; i < 6; i ++) {
+            if (i < neighbors.Count) {
+                neighborsSum += neighbors[i].temperature;
+            } else {
+                neighborsSum += SliderAirTemp.instace.currentValue;
+            }
+        }
+
+        float rightPart = F * neighborsSum;
+
+        this.newTemperature = leftPart + rightPart;
+    }
+
     public Particle() {
-        thermalDiffusivity = SliderManager.GetJsonSettings().objectThermalDiffusivity.defaultValue;
+        thermalDiffusivity = SliderDiffusity.instace.currentValue;
 
         // TODO: this is quite goofy
         minTemperature = SliderManager.GetJsonSettings().objectStartingTemp.defaultValue;

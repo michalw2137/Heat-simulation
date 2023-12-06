@@ -5,6 +5,8 @@ public class SliderDiffusity : SliderTemplate
         maxSliderValue = SliderManager.GetJsonSettings().objectThermalDiffusivity.max;
         defaultSliderValue = SliderManager.GetJsonSettings().objectThermalDiffusivity.defaultValue;
 
+        variableName = "Thermal diffusity";
+
         base.Init();
     }
     

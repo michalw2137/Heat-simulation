@@ -67,32 +67,23 @@ public class SpawnParticles : MonoBehaviour
             // Dont heat air + it doesnt have neighbors
             if (particle.type == "air") { // probably shouldnt be hardcoded string 
                 ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
-
                 continue;
             }
 
-            // if (particle.type == "edge") { // probably shouldnt be hardcoded string 
-            //     ball.GetComponent<Renderer>().material.color = Color.black; // TODO: make gameObject field in Particle class
-
-            //     continue;
-            // }
-
-            float temperatureSum = particle.temperature;
-            foreach (Particle neighbor in particle.getNeighbors()) {
-                temperatureSum += neighbor.temperature;
+            if (PointCollidesWithGameObject(particle.position, heatSource)) {
+                particle.SetTemperature(SliderSourceTemp.instace.currentValue);
             }
 
-            float averageTemperature = temperatureSum / 6.0f; // TODO: implement correct formula
-
-            particle.newTemperature = averageTemperature;
-            // particle.SetTemperature(averageTemperature); 
-            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+            particle.calculateNewTemperature();
 
         }
 
         foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
             Particle particle = kvp.Key;
+            GameObject ball = kvp.Value;
+            
             particle.SetTemperature(particle.newTemperature);
+            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
         }
 
         // Debug.Log("Updated all particles temperature");

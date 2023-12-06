@@ -14,8 +14,15 @@ public class SliderTemplate : MonoBehaviour
 
     public static SliderTemplate instace;
 
+    public Text textField;
+    public string variableName;
+
     void Awake() {
         instace = this;
+
+        slider = GetComponent<Slider>();
+
+        textField = GetComponentInChildren<Text>();
     }
 
     public void Init() {
@@ -28,8 +35,10 @@ public class SliderTemplate : MonoBehaviour
         slider.onValueChanged.AddListener(HandleSliderValueChanged);
     }
 
-    void HandleSliderValueChanged(float value) {
+    protected void HandleSliderValueChanged(float value) {
         // Do something with the new slider value
         currentValue = slider.value;
+
+        textField.text = $"{variableName}: {currentValue}";
     }
 }

@@ -22,9 +22,7 @@ public class JsonSettings
     public VariableSettings sourceX;
     public VariableSettings sourceY;
     public VariableSettings sourceZ;
-    public VariableSettings sourceLenght;
-    public VariableSettings sourceWidth;
-    public VariableSettings sourceDepth;
+    public VariableSettings sourceScale;
     public VariableSettings sourceStartingTemp;
 }
 

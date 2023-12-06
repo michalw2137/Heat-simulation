@@ -5,6 +5,8 @@ public class SliderStartingTemp : SliderTemplate
         maxSliderValue = SliderManager.GetJsonSettings().objectStartingTemp.max;
         defaultSliderValue = SliderManager.GetJsonSettings().objectStartingTemp.defaultValue;
 
+        variableName = "Object temperature";
+
         base.Init();
     }
     
