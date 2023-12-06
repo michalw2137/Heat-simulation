@@ -62,7 +62,7 @@ public class Particle
 
         float F = diffusity * time / Mathf.Pow(distance, 2);
 
-        F = 1f/6f;
+        // F = 1f/6f;
 
         if (F > 1f/6f) {
             Debug.LogWarning($"F > 1/6 ({F})");
@@ -84,7 +84,7 @@ public class Particle
 
         this.newTemperature = leftPart + rightPart;
 
-        Debug.Log($"Old temp: {temperature}, New temp: {newTemperature}");
+        // Debug.Log($"Old temp: {temperature}, New temp: {newTemperature}");
     }
 
     public Particle() {
