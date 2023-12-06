@@ -6,12 +6,12 @@
     },
     "objectStartingTemp": {
         "min": 253,
-        "max": 303,
+        "max": 503,
         "default": 278
     },
     "airStartingTemp": {
         "min": 253,
-        "max": 303,
+        "max": 503,
         "default": 278
     },
     "sourceX": {

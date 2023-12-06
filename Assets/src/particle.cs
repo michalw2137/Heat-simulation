@@ -120,7 +120,7 @@ public class Particle
         float normalizedTemperature = Mathf.Clamp01((temperature - 253.0f) / (2273.0f - 253.0f));
 
         // Define the custom color scale
-        Color color0 = new Color(0.5f, 0, 1); 
+        Color color0 = new Color(0, 0, 0.5f); 
         Color color1 = new Color(0, 0, 1); 
         Color color2 = new Color(0, 0.5f, 1);
         Color color3 = new Color(0, 1, 1);
