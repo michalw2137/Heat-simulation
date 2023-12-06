@@ -11,11 +11,7 @@ public class VariableSettings
 }
 
 [System.Serializable]
-public class JsonSettings
-{
-    public VariableSettings objectLenght;
-    public VariableSettings objectWidth;
-    public VariableSettings objectDepth;
+public class JsonSettings {
     public VariableSettings objectThermalDiffusivity;
     public VariableSettings objectStartingTemp;
     public VariableSettings airStartingTemp;
@@ -26,16 +22,7 @@ public class JsonSettings
     public VariableSettings sourceStartingTemp;
 }
 
-public class SliderManager : MonoBehaviour
-{
-    public GameObject sliderPrefab; // Reference to the slider prefab in the scene
-    public Text TextVariableName;
-    public Slider variableSlider;
-    public Text TextVariableValue;
-
-    public float verticalOffset = 30f; // Adjust this value based on your layout needs
-
-    public float yPos;
+public class SliderManager : MonoBehaviour {
     public string jsonFilePath = "config.json"; // Update the path to your JSON file
 
     public JsonSettings jsonSettings;
@@ -72,29 +59,25 @@ public class SliderManager : MonoBehaviour
         // CreateSlider("sourceStartingTemp", jsonSettings.sourceStartingTemp);
     }
 
-    private void CreateSlider(string variableName, VariableSettings variableSettings)
-    {
-        GameObject sliderObject = Instantiate(sliderPrefab, this.transform);
+    // private void CreateSlider(string variableName, VariableSettings variableSettings)
+    // {
+    //     GameObject sliderObject = Instantiate(sliderPrefab, this.transform);
 
-        sliderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, yPos);
-        yPos -= verticalOffset;
+    //     sliderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, yPos);
+    //     yPos -= verticalOffset;
 
-        Slider slider = sliderObject.GetComponent<Slider>();
+    //     Slider slider = sliderObject.GetComponent<Slider>();
 
-        Text nameText = sliderObject.transform.Find("TextVariableName").GetComponent<Text>();
-        Text valueText = sliderObject.transform.Find("TextVariableValue").GetComponent<Text>();
+    //     Text nameText = sliderObject.transform.Find("TextVariableName").GetComponent<Text>();
+    //     Text valueText = sliderObject.transform.Find("TextVariableValue").GetComponent<Text>();
 
-        nameText.text = variableName;
-        slider.minValue = variableSettings.min;
-        slider.maxValue = variableSettings.max;
-        slider.value = variableSettings.defaultValue;
-        valueText.text = slider.value.ToString("F3");
+    //     nameText.text = variableName;
+    //     slider.minValue = variableSettings.min;
+    //     slider.maxValue = variableSettings.max;
+    //     slider.value = variableSettings.defaultValue;
+    //     valueText.text = slider.value.ToString("F3");
 
-        slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(slider, valueText); });
-    }
+    //     slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(slider, valueText); });
+    // }
 
-    private void OnSliderValueChanged(Slider slider, Text valueText)
-    {
-        valueText.text = slider.value.ToString("F3");
-    }
 }

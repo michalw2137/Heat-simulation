@@ -54,6 +54,31 @@ public class SpawnParticles : MonoBehaviour
         };
     }
 
+    public void setThermalDiffusities(float diffusity) {
+        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+            Particle particle = kvp.Key;
+            particle.thermalDiffusivity = diffusity;
+        }
+    }
+
+    public void setStartingTemp() {
+        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+            Particle particle = kvp.Key;
+            GameObject ball = kvp.Value;
+
+            if (particle.type == "air") {
+                particle.SetTemperature(SliderAirTemp.instance.currentValue);
+            } else if (PointCollidesWithGameObject(particle.position, heatSource)) {
+                Debug.Log($"({particle.position}) set to temperature {SliderSourceTemp.instance.currentValue}");
+                particle.SetTemperature(SliderSourceTemp.instance.currentValue);
+            } else {
+                particle.SetTemperature(SliderStartingTemp.instance.currentValue);
+            }
+
+            ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+        }
+    }
+
 
     void FixedUpdate() {
         if (!InputManager.instance.isSimulationOn) {
@@ -64,27 +89,25 @@ public class SpawnParticles : MonoBehaviour
             Particle particle = kvp.Key;
             GameObject ball = kvp.Value;
 
-            // Dont heat air + it doesnt have neighbors
-            if (particle.type == "air") { // probably shouldnt be hardcoded string 
-                ball.GetComponent<Renderer>().material.color = Color.white; // TODO: make gameObject field in Particle class
-                continue;
-            }
-
             if (PointCollidesWithGameObject(particle.position, heatSource)) {
-                particle.SetTemperature(SliderSourceTemp.instace.currentValue);
-            }
+                particle.SetTemperature(SliderSourceTemp.instance.currentValue);
+                particle.newTemperature = particle.temperature;
+            } 
 
             particle.calculateNewTemperature();
-
-        }
-
-        foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
-            Particle particle = kvp.Key;
-            GameObject ball = kvp.Value;
             
             particle.SetTemperature(particle.newTemperature);
             ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+
         }
+
+        // foreach (var kvp in particleObjects) { // TODO: perhaps have straight list of particles lol
+        //     Particle particle = kvp.Key;
+        //     GameObject ball = kvp.Value;
+            
+        //     particle.SetTemperature(particle.newTemperature);
+        //     ball.GetComponent<Renderer>().material.color = particle.color; // TODO: make gameObject field in Particle class
+        // }
 
         // Debug.Log("Updated all particles temperature");
 

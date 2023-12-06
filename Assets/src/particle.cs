@@ -56,13 +56,19 @@ public class Particle
     }
 
     public void calculateNewTemperature() {
-        float F = thermalDiffusivity * Time.deltaTime / Mathf.Pow(SpawnParticles.instance.distanceBetweenParticles / 100f, 2);
+        var distance =  SpawnParticles.instance.distanceBetweenParticles / 100f;
+        var diffusity = thermalDiffusivity;
+        var time = Time.deltaTime;
+
+        float F = diffusity * time / Mathf.Pow(distance, 2);
+
+        F = 1f/6f;
 
         if (F > 1f/6f) {
             Debug.LogWarning($"F > 1/6 ({F})");
         }
 
-        float leftPart = this.temperature * (1 - 6) * F;
+        float leftPart = this.temperature * (1 - F);
     
         float neighborsSum = 0;
 
@@ -70,28 +76,30 @@ public class Particle
             if (i < neighbors.Count) {
                 neighborsSum += neighbors[i].temperature;
             } else {
-                neighborsSum += SliderAirTemp.instace.currentValue;
+                neighborsSum += SliderAirTemp.instance.currentValue;
             }
         }
 
         float rightPart = F * neighborsSum;
 
         this.newTemperature = leftPart + rightPart;
+
+        Debug.Log($"Old temp: {temperature}, New temp: {newTemperature}");
     }
 
     public Particle() {
-        thermalDiffusivity = SliderDiffusity.instace.currentValue;
+        // thermalDiffusivity = SliderDiffusity.instace.currentValue;
 
-        // TODO: this is quite goofy
-        minTemperature = SliderManager.GetJsonSettings().objectStartingTemp.defaultValue;
-        maxTemperature = 2500; // SliderManager.GetJsonSettings().sourceStartingTemp.defaultValue;
+        // // TODO: this is quite goofy
+        // minTemperature = SliderStartingTemp.instace.minSliderValue;
+        // maxTemperature = SliderSourceTemp.instace.currentValue;
 
-        SetTemperature(SliderManager.GetJsonSettings().objectStartingTemp.defaultValue);
+        // SetTemperature(SliderManager.GetJsonSettings().objectStartingTemp.defaultValue);
     }
 
     public void SetTemperature(float newTemperature) {
         if (this.type == "air") {
-            this.temperature = SliderManager.GetJsonSettings().airStartingTemp.defaultValue;
+            this.temperature = SliderAirTemp.instance.currentValue;
             this.color = Color.cyan;
             return;
         }
@@ -104,7 +112,7 @@ public class Particle
     {
         
         // Normalize temperature to a value between 0 and 1
-        float normalizedTemperature = Mathf.InverseLerp(minTemperature, maxTemperature, temperature);
+        float normalizedTemperature = Mathf.InverseLerp(SliderStartingTemp.instance.minSliderValue, SliderSourceTemp.instance.currentValue, temperature);
 
         // Use the gradient function to map the normalized value to a color
         Color color = GradientColor(normalizedTemperature);

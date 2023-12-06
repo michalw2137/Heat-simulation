@@ -12,24 +12,22 @@ public class SliderTemplate : MonoBehaviour
 
     public float currentValue = 0;
 
-    public static SliderTemplate instace;
+    // public static SliderTemplate instace;
 
     public Text textField;
     public string variableName;
 
-    void Awake() {
-        instace = this;
-
+    public void Init() {
         slider = GetComponent<Slider>();
 
         textField = GetComponentInChildren<Text>();
-    }
 
-    public void Init() {
         // Set the min, max, and default values of the slider
         slider.minValue = minSliderValue;
         slider.maxValue = maxSliderValue;
         slider.value = defaultSliderValue;
+
+        currentValue = slider.value;
 
         // Add a listener to respond to changes in the slider value
         slider.onValueChanged.AddListener(HandleSliderValueChanged);

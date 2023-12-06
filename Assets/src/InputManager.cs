@@ -46,5 +46,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha9)) {
             HeatSource.instance.Show();
         }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SpawnParticles.instance.setStartingTemp();
+            SpawnParticles.instance.setThermalDiffusities(SliderDiffusity.instance.currentValue);
+            DynamicMesh.instance.updateColors();
+        }
     }
 }

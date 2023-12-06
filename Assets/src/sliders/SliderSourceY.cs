@@ -1,5 +1,10 @@
 public class SliderSourceY : SliderTemplate
 {
+    public static SliderSourceY instance;
+    void Awake() {
+        instance = this;
+    }
+
     void Start() {
         minSliderValue = SliderManager.GetJsonSettings().sourceY.min;
         maxSliderValue = SliderManager.GetJsonSettings().sourceY.max;
